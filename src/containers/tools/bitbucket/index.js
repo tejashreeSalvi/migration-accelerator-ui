@@ -75,14 +75,30 @@ const ToolForm = () => {
     event.preventDefault();
     try {
       // Make a POST request to your API endpoint
-      console.log("Migration Data:", formData);
+
+      let payload = {
+        "bitbucketserverurl": formData.serverHost,
+        "bitbucketcloudurl": formData.clientHost,
+        "username": formData.serverUsername,
+        "password": formData.serverPassword,
+        "cloudworkspace": formData.workspace,
+        "cloudauthusername":formData.clientUsername,
+        "cloudauthpassword": formData.clientPassword
+      }
+      console.log("Migration Data:", payload);
       // const response = await healthCheck();
-      const response = await migrateScript(formData);
+      const response = await migrateScript(payload);
       // // Handle the API response
       console.log("API Response:", response.data);
-
+      if (response.status === 200){
+        alert('Migration done!!!')
+        setFormData(initialFormData);
+      }
+      else{
+        console.log("Error");
+      }
       // Reset the form fields
-      setFormData(initialFormData);
+      // setFormData(initialFormData);
     } catch (error) {
       // Handle API call error
       console.error("Error:", error);
