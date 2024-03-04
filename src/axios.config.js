@@ -6,7 +6,7 @@ export const axiosConfig = {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': '*',
         'Access-Control-Allow-Methods': '*',
-        'Access- Control-Allow-Credentials': 'true'
+        'Access-Control-Allow-Credentials': 'true'
     }, 
     timeout: 300000
 };
@@ -14,7 +14,7 @@ export const axiosConfig = {
 
 const serverInstance = axios.create({
     ...axiosConfig,
-    baseURL: "http://locahost:5000"
+    baseURL: "http://localhost:5100"
 })
 
 

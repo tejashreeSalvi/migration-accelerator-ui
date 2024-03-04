@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as Mui from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { migrateScript } from "../../../api/accelerator";
+import { migrateScript, healthCheck } from "../../../api/accelerator";
 import {
   FormControl,
   InputLabel,
@@ -75,8 +75,10 @@ const ToolForm = () => {
     event.preventDefault();
     try {
       // Make a POST request to your API endpoint
+      console.log("Migration Data:", formData);
+      // const response = await healthCheck();
       const response = await migrateScript(formData);
-      // Handle the API response
+      // // Handle the API response
       console.log("API Response:", response.data);
 
       // Reset the form fields
