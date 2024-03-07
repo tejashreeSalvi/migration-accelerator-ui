@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as Mui from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { migrateScript } from "../../../api/accelerator";
+import { migrateScript, healthCheck } from "../../../api/accelerator";
 import {
   FormControl,
   InputLabel,
@@ -75,12 +75,30 @@ const ToolForm = () => {
     event.preventDefault();
     try {
       // Make a POST request to your API endpoint
-      const response = await migrateScript(formData);
-      // Handle the API response
-      console.log("API Response:", response.data);
 
+      let payload = {
+        "bitbucketserverurl": formData.serverHost,
+        "bitbucketcloudurl": formData.clientHost,
+        "username": formData.serverUsername,
+        "password": formData.serverPassword,
+        "cloudworkspace": formData.workspace,
+        "cloudauthusername":formData.clientUsername,
+        "cloudauthpassword": formData.clientPassword
+      }
+      console.log("Migration Data:", payload);
+      // const response = await healthCheck();
+      const response = await migrateScript(payload);
+      // // Handle the API response
+      console.log("API Response:", response.data);
+      if (response.status === 200){
+        alert('Migration done!!!')
+        setFormData(initialFormData);
+      }
+      else{
+        console.log("Error");
+      }
       // Reset the form fields
-      setFormData(initialFormData);
+      // setFormData(initialFormData);
     } catch (error) {
       // Handle API call error
       console.error("Error:", error);
